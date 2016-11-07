@@ -1,0 +1,12 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>*** \(%logger{30}\)%green(%X{debugId}) %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="${log.root:-info}">
+        <appender-ref ref="STDOUT" />
+    </root>
+    <logger name="slick.basic.BasicBackend.action" level="${log.action:-error}" />
+    <logger name="slick.jdbc.JdbcBackend.statement" level="${log.jdbc.statement:-info}" />
+</configuration>
