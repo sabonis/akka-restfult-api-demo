@@ -9,13 +9,24 @@ import scala.concurrent.Future
   */
 sealed trait DAO[M] {
   def all: Future[Seq[M]]
+  def updateById(id: Int, value: M): Future[Int]
 }
 
-trait SqlDAO[M] extends DAO[M] {
-  val tableQuery: TableQuery[_ <: Table[M]]
+trait SqlDAO[M <: BaseEntity] extends DAO[M] {
 
-  private val db = Database.forConfig("postgres")
+  val tableQuery: TableQuery[_ <: BaseTable[M]]
 
-  def all = db run tableQuery.result
+  protected val db = Database.forConfig("postgres")
+
+  override def all: Future[Seq[M]] = db run tableQuery.result
+
+  override def updateById(id: Int, value: M): Future[Int] = {
+    db run
+      tableQuery
+        .filter(_.id === id)
+        .update(value)
+  }
+
+
 }
 
