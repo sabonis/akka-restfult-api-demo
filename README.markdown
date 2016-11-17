@@ -1,5 +1,18 @@
-Template license (This section can be removed)
-----------------------------------------------
-Written in 2016 by @eed3si9n
-To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
-See <http://creativecommons.org/publicdomain/zero/1.0/>.
+#Deploy
+develop machine side
+``` sh
+# Build docker image
+sbt app/docker
+# Export image ready for building.
+docker save -o ~/test tw.com.mai-mai/property-management
+# Deploy to aws
+scp ~/test sabonis@52.34.208.41:~      
+```
+---
+server side
+``` sh
+# import image to docker
+sudo docker load -i test
+# Run the image and map its port from 8080 to host's 8081 port
+docker run -d -p8081:8080 tw.com.mai-mai/property-management
+```
