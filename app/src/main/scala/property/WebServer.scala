@@ -12,7 +12,7 @@ import property.message._
 import property.message.request.Authorize
 import property.message.response.{RAuthorize, Response}
 import property.model._
-import property.route.ReservablesRoute
+import property.route.{PropertiesRoute, ReservablesRoute}
 import slick.dbio.DBIOAction
 import slick.jdbc.PostgresProfile.api._
 
@@ -44,35 +44,26 @@ object WebServer extends JsonSupport {
           //complete("fuck")
         }
       } ~
-      path("properties") {
-        get {
-          complete {
-            Properties.all map { ps =>
-              response.Properties(200, ps)
-            }
-          }
-        }
-      } ~
       path("login") {
         post {
           entity(as[Authorize]) { auth =>
-            complete(RAuthorize(200, Token))
+            complete(RAuthorize(200, "ok", Token))
           }
         }
-      } ~ ReservablesRoute()
+      } ~
+      ReservablesRoute() ~
+      PropertiesRoute()
 
     val bindingFuture = Http().bindAndHandle(route, "0.0.0.0", 8080)
 
-    /*
     println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
-    //StdIn.readLine() // let it run until user presses return
+    StdIn.readLine() // let it run until user presses return
     bindingFuture
       .flatMap(_.unbind()) // trigger unbinding from the port
       .onComplete(_ => {
         database.close()
         system.terminate()
       }) // and shutdown when done
-    */
   }
 
   def initDB() = {

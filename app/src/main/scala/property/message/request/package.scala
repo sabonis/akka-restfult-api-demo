@@ -9,7 +9,10 @@ package object request {
 
   case class Authorize(companyId: Int, clientId: String, expireDuration: Int, password: String)
 
-  case class Reservable(startDate: Timestamp, endDate: Timestamp)
+  case class Reservable(name: String, meta: Option[String], status: Int, startDate: Timestamp, endDate: Timestamp, propertyId: Int)
 
   case class LockReservable(reservableId: Int, lockdownSeconds: Int)
+
+  case class Property(name: String)
+
 }

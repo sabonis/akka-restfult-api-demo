@@ -4,6 +4,8 @@ import java.sql.Timestamp
 
 import slick.jdbc.PostgresProfile.api._
 
+import scala.concurrent.Future
+
 /**
   * Created by sabonis on 07/11/2016.
   */
@@ -28,6 +30,12 @@ class ReservablesDAO extends SqlDAO[Reservable] {
       tableQuery.filter(_.id === id)
         .map(_.status)
         .update(status)
+    }
+  }
+
+  override def create(v: Reservable): Future[Int] = {
+    db run {
+      tableQuery.map(r => (r.name, r.startDate, r.endDate, r.propertyId)) += (v.name, v.startDate, v.endDate, v.propertyId)
     }
   }
 
