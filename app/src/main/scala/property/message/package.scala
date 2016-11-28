@@ -65,7 +65,7 @@ package object message {
     implicit def propertiesFormat[A: JsonFormat] = jsonFormat2(Properties[A])
 
     implicit val lockerReservableFormat = jsonFormat2(request.LockReservable)
-    implicit val requestReservableFormat = jsonFormat6(request.Reservable)
+    implicit val requestReservableFormat = jsonFormat6(request.Reservable.apply)
     implicit val reservableFormat = jsonFormat7(Reservable)
     implicit def reservablesFormat[A: JsonFormat] = jsonFormat2(Reservables[A])
   }

@@ -40,11 +40,19 @@ object ReservablesRoute extends Route {
             }
           }
         } ~
-          delete {
+        delete {
+          complete {
+            Reservables.deleteById(rId) map int2Response
+          }
+        } ~
+        put {
+          entity(as[request.Reservable]) { r =>
             complete {
-              Reservables.deleteById(rId) map int2Response
+              val reservable = Reservable(rId, r.name, r.meta, r.status, r.startDate, r.endDate, r.propertyId)
+              Reservables.updateById(rId, reservable) map int2Response
             }
           }
+        }
       } ~
       get {
         complete {

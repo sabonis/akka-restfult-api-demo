@@ -13,7 +13,7 @@ case class Reservable (
   id: Int, name: String, meta: Option[String], status: Int, startDate: Timestamp, endDate: Timestamp, propertyId: Int
 ) extends BaseEntity
 
-class ReservablesDAO extends SqlDAO[Reservable] {
+object ReservablesDAO extends SqlDAO[Reservable] {
   val StatusFree = 0
   val StatusLock = 1
   val StatusSold = 2
@@ -42,16 +42,16 @@ class ReservablesDAO extends SqlDAO[Reservable] {
   class TableImpl(tag: Tag) extends BaseTable[Reservable](tag, "RESERVABLE") {
     //override def id = column[Int]("ID")
     def name = column[String]("NAME")
-    def meta = column[Option[String]]("META")
+    def meta = column[String]("META")
     def status = column[Int]("STATUS", O.Default(StatusFree))
     def startDate = column[Timestamp]("START_DATE")
     def endDate = column[Timestamp]("END_DATE")
     def propertyId = column[Int]("PROPERTY_ID")
 
     // Every table needs a * projection with the same type as the table's type parameter
-    def * = (id, name, meta, status, startDate, endDate, propertyId) <> (Reservable.tupled, Reservable.unapply)
+    def * = (id, name, meta.?, status, startDate, endDate, propertyId) <> (Reservable.tupled, Reservable.unapply)
 
-    def property = foreignKey("Reservable", propertyId, properties)(_.id)
+    def property = foreignKey("PROPERTY_FK", propertyId, properties)(_.id, onDelete = ForeignKeyAction.Cascade)
 
     //def timestamp = new Timestamp(Calendar.getInstance().getTime.getTime)
 

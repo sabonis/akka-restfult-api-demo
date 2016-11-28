@@ -68,13 +68,13 @@ object WebServer extends JsonSupport {
 
   def initDB() = {
     db {
-      val dts = new Timestamp(new DateTime(2016, 11, 10, 0, 0, 0, 0).getMillis)
-      val dte = new Timestamp(new DateTime(2016, 11, 20, 0, 0, 0, 0).getMillis)
+      //val dts = new Timestamp(new DateTime(2016, 11, 10, 0, 0, 0, 0).getMillis)
+      //val dte = new Timestamp(new DateTime(2016, 11, 20, 0, 0, 0, 0).getMillis)
       DBIO.seq(
-        //reservables.schema.create,
+        Reservables.tableQuery.schema.create,
+        Properties.tableQuery.schema.create
         //reservables.map(r => (r.name, r.startDate, r.endDate, r.propertyId)) += ("RAV4", dts, dte, 2),
         //reservables.map(r => (r.name, r.startDate, r.endDate, r.propertyId)) += ("RAV5", dts, dte, 2)
-        //properties.schema.create,
         //properties.map(_.name) += "testkk",
         //properties.map(_.name) += "sabonis"
       )
