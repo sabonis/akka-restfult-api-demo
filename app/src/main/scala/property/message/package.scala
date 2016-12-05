@@ -5,7 +5,7 @@ import java.sql.Timestamp
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
-import property.message.request.Authorize
+import property.message.request.{Authorize, UpdateProperty, UpdateReservable}
 import property.message.response._
 import property.model.{Property, Reservable}
 import spray.json._
@@ -62,11 +62,13 @@ package object message {
 
     implicit val propertyRequestFormat = jsonFormat1(request.Property)
     implicit val propertyFormat = jsonFormat2(Property)
+    implicit val updatePropertyFormat = jsonFormat1(UpdateProperty)
     implicit def propertiesFormat[A: JsonFormat] = jsonFormat2(Properties[A])
 
     implicit val lockerReservableFormat = jsonFormat2(request.LockReservable)
     implicit val requestReservableFormat = jsonFormat6(request.Reservable.apply)
     implicit val reservableFormat = jsonFormat7(Reservable)
     implicit def reservablesFormat[A: JsonFormat] = jsonFormat2(Reservables[A])
+    implicit val updateReservableFormat = jsonFormat6(UpdateReservable)
   }
 }

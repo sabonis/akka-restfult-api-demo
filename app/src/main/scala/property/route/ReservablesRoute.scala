@@ -48,8 +48,16 @@ object ReservablesRoute extends Route {
         put {
           entity(as[request.Reservable]) { r =>
             complete {
+              //val reservable = Reservable(rId, r.name, r.meta, r.status, r.startDate, r.endDate, r.propertyId)
               val reservable = Reservable(rId, r.name, r.meta, r.status, r.startDate, r.endDate, r.propertyId)
               Reservables.updateById(rId, reservable) map int2Response
+            }
+          }
+        } ~
+        patch {
+          entity(as[request.UpdateReservable]) { r =>
+            complete {
+              Reservables.update(rId, r) map int2Response
             }
           }
         }

@@ -1,5 +1,6 @@
 package property.model
 
+import property.message.request.UpdateEntity
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.Future
@@ -21,7 +22,15 @@ abstract class SqlDAO[M <: BaseEntity] extends DAO[M] {
 
   val tableQuery: TableQuery[_ <: BaseTable[M]]
   protected val db = SqlDAO.db
+  implicit val ec = db.ioExecutionContext
 
+  def update(id: Int, ue: UpdateEntity[M]): Future[Int] = {
+    read(id).flatMap {
+      case Some(r) =>
+        updateById(id, ue.merge(r))
+      case None => Future(0)
+    }
+  }
 
   override def all: Future[Seq[M]] = db run tableQuery.result
 

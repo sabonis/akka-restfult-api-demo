@@ -2,7 +2,7 @@ package property.model
 
 import slick.jdbc.PostgresProfile.api._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * Created by sabonis on 03/11/2016.
@@ -24,7 +24,3 @@ class PropertiesDAO extends SqlDAO[Property] {
     }
   }
 }
-
-object PropertiesDAO {
-}
-

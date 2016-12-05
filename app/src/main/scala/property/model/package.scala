@@ -14,7 +14,6 @@ package object model {
     def id = column[Int]("ID", O.PrimaryKey, O.AutoInc) // This is the primary key column
   }
 
-  val Reservables = ReservablesDAO
-
+  object Reservables extends ReservablesDAO
   object Properties extends PropertiesDAO
 }

@@ -37,6 +37,13 @@ object PropertiesRoute extends Route {
               Properties.updateById(pid, Property(pid, p.name)) map int2Response
             }
           }
+        } ~
+        patch {
+          entity(as[request.UpdateProperty]) { p =>
+            complete {
+              Properties.update(pid, p) map int2Response
+            }
+          }
         }
       } ~
       get {
