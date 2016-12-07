@@ -1,16 +1,13 @@
 package property
 
-import java.sql.Timestamp
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-import org.joda.time.DateTime
 import property.message._
 import property.message.request.Authorize
-import property.message.response.{RAuthorize, Response}
+import property.message.response.RAuthorize
 import property.model._
 import property.route.{PropertiesRoute, ReservablesRoute}
 import slick.dbio.DBIOAction
