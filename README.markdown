@@ -6,7 +6,7 @@ sbt app/docker
 # Export image ready for building.
 docker save -o ~/test tw.com.mai-mai/property-management
 # Deploy to aws
-scp ~/test sabonis@52.34.208.41:~      
+scp ~/test YOUR_IP:~      
 ```
 ---
 server side
